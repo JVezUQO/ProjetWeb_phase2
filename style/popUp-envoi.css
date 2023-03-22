@@ -1,0 +1,59 @@
+#wraper-popup-envoi {
+  /*display: initial;*/
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  opacity: 1 !important;
+  justify-content: center;
+}
+
+.popup-envoi {
+  border-style: solid;
+  border-color: #888;
+  border-radius: 10px;
+
+  max-height: 30%;
+  max-width: 30%;
+  min-height: 15%;
+  min-width: 25%;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 2vh;
+
+  background-color: rgb(48, 49, 54);
+}
+
+#envoi-message {
+  grid-column-start: 1;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  margin: initial;
+
+  margin-left: 3vh;
+  font-size: 3vh;
+  color: antiquewhite;
+  font-family: Whitney, "Open Sans", Helvetica, sans-serif;
+
+  resize: none;
+}
+
+#popUp-envoi-button {
+  width: 10vh;
+  height: 100%;
+  grid-column-start: 8;
+  grid-column-end: 8;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  margin: auto;
+  margin-top: 1vh;
+  margin-right: 1vh;
+}

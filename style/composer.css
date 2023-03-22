@@ -1,0 +1,92 @@
+#composer-couriel {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  grid-gap: 1vh;
+}
+
+.composer-title {
+  margin-top: 8px;
+  grid-column-start: 2;
+  grid-column-end: 10;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.composer-title input {
+  height: 90%;
+  min-width: 100%;
+
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #888;
+
+  background-color: rgb(48, 49, 54);
+
+  text-align: left;
+  font-size: 3vh;
+  color: antiquewhite;
+
+  resize: none;
+}
+
+.composer-destinataire {
+  grid-column-start: 2;
+  grid-column-end: 10;
+  grid-row-start: 2;
+  grid-row-end: 2;
+}
+
+.composer-destinataire input {
+  height: 90%;
+  min-width: 100%;
+
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #888;
+
+  background-color: rgb(48, 49, 54);
+
+  text-align: left;
+  font-size: 3vh;
+  color: antiquewhite;
+
+  resize: none;
+}
+
+.composer-content {
+  grid-column-start: 2;
+  grid-column-end: 20;
+  grid-row-start: 3;
+  grid-row-end: 10;
+}
+
+.composer-content textarea {
+  height: 90%;
+  min-width: 100%;
+
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #888;
+  font-family: Whitney, "Open Sans", Helvetica, sans-serif;
+
+  background-color: rgb(48, 49, 54);
+
+  text-align: left;
+  font-size: 3vh;
+  color: antiquewhite;
+
+  resize: none;
+}
+
+.composer-envoyer {
+  grid-column-start: 5;
+  grid-column-end: 5;
+  grid-row-start: 10;
+  grid-row-end: 10;
+}
+
+.composer-envoyer button {
+  margin-top: 0.5vh;
+  width: 25%;
+  font-size: large;
+}

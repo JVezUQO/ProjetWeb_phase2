@@ -1,0 +1,115 @@
+#carnet-adresse {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+#carnet-adresse button {
+  width: 5vh;
+  height: 5vh;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+#carnet-adresse-search-bar {
+  grid-column-start: 2;
+  grid-column-end: 12;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  margin-right: 4vh;
+}
+
+#carnet-adresse-search-bar input[type="text"] {
+  width: 100%;
+  background-color: rgb(48, 49, 54);
+  font-size: 17px;
+  color: antiquewhite;
+  font-family: Whitney, "Open Sans", Helvetica, sans-serif;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #888;
+  padding: 6px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  border-radius: 4px;
+}
+
+#carnet-adresse-list {
+  background-color: rgb(48, 49, 54);
+
+  height: 100%;
+
+  padding: 10px;
+
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #888;
+
+  overflow: auto;
+
+  grid-column-start: 2;
+  grid-column-end: 16;
+  grid-row-start: 2;
+  grid-row-end: 10;
+}
+
+#carnet-adresse-list ul {
+  position: relative;
+  font-family: Whitney, "Open Sans", Helvetica, sans-serif;
+  color: antiquewhite;
+  left: -3.5vh;
+
+  list-style: none;
+
+  font-size: 18px;
+
+  transition: 0.2s;
+
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#carnet-adresse-list li:hover {
+  border: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  size: fit-content;
+}
+
+.selected {
+  border: solid;
+  border-radius: 5px;
+  border-color: #888;
+  background-color: rgb(48, 49, 54);
+}
+
+.carnet-adresse-ajouter-adresse {
+  grid-column-start: 12;
+  grid-column-end: 13;
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+
+.carnet-adresse-modifier-adresse {
+  grid-column-start: 13;
+  grid-column-end: 14;
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+.carnet-adresse-destinataire-adresse {
+  grid-column-start: 14;
+  grid-column-end: 15;
+  grid-row-start: 1;
+  grid-row-end: 1;
+}
+.carnet-adresse-supprimer-adresse {
+  grid-column-start: 15;
+  grid-column-end: 16;
+  grid-row-start: 1;
+  grid-row-end: 1;
+}

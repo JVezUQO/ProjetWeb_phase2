@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Listes des scripts CSS/JS qui vont être utiliser-->
+
+<head>
+  <link rel="stylesheet" href="style/main.css" />
+  <link rel="stylesheet" href="style/normalizebutton.css" />
+  <link rel="stylesheet" href="style/normalizescrollbar.css" />
+
+  <link rel="stylesheet" href="style/popup-modifier-carnet.css">
+  <link rel="stylesheet" href="style/listeemail.css" />
+  <link rel="stylesheet" href="style/carnetadresse.css" />
+  <link rel="stylesheet" href="style/composer.css" />
+  <link rel="stylesheet" href="style/popUp-envoi.css">
+
+  <script src="script/popUpEnvoi.js"></script>
+  <script src="script/popUpModifierCarnet.js" defer></script>
+  <script src="script/pageInterchangable.js" defer></script>
+  <script src="script/listeEmail.js" defer></script>
+  <script src="script/carnetAdresse.js" defer></script>
+  <script src="script/envoi.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+  <script src="https://kit.fontawesome.com/42739acc52.js" crossorigin="anonymous"></script>
+
+  <script src="script/animatedBackground.js"></script>
+  <div id="vanta"></div>
+</head>
+
+<body onload="refreshList()">
+  <!-- Pop up pour ajouter des contacts dans le carnet d'adresse-->
+  <div id="wraper-popup-modifier-carnet">
+    <div class="popup-modifier-carnet">
+      <input type="text" id="contact-name-field" placeholder="Name"></input>
+      <button onclick="sauvegarder()" id="contact-conffirmer-button" class="normalize-button">
+        <i class="fa fa-check" aria-hidden="true"></i>
+      </button>
+      <button onclick="fermer();" id="contact-annulez-button" class="normalize-button">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+      <textarea type="textarea" id="contact-public-key-field" placeholder="public-key"></textarea>
+    </div>
+  </div>
+
+  <!-- La navigation bar (les boutons pour basculer de Composer aux carnet d'adresse)-->
+  <div class="navigation-bar">
+    <button class="normalize-button" onclick="showComposer()">
+      <div class="compose-button" data-tooltip="Écrire un courriel">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      </div>
+    </button>
+    <br><br><br>
+    <button class="normalize-button" onclick="showCarnetAdresse()">
+      <div class="contact-button" data-tooltip="Contact"><i class="fa fa-address-book-o" aria-hidden="true"></i></div>
+    </button>
+  </div>
+  <!--Search bar pour la liste des courriels-->
+  <div class="search-wrapper">
+    <input type="search" placeholder="Courriel" id="liste-couriel-search" data-search />
+  </div>
+  <!-- La liste de tous les couriels recus -->
+  <div class="list-couriel" id="liste-couriel">
+    <div class="user-cards" data-user-cards-container></div>
+
+    <template data-user-template>
+      <div class="card" id="0" onclick="lireemail(this)">
+        <div class="header" data-header></div>
+        <div class="body" data-body></div>
+        <div class="content" data-content style="display: none;"></div>
+      </div>
+    </template>
+  </div>
+
+  <!-- l'interface du carnet d'adresse -->
+  <div class="ui-interchangable" id="carnet-adresse" style="display: none">
+    <div class="carnet-adresse-title"></div>
+    <div id="carnet-adresse-search-bar">
+      <input type="text" placeholder="Contact" oninput="refreshList()" />
+    </div>
+    <div id="carnet-adresse-list">
+
+      <ul>
+      </ul>
+    </div>
+    <div class="carnet-adresse-ajouter-adresse">
+      <button class="normalize-button" id="addAdresse" onclick="open_new()">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+    <div class="carnet-adresse-modifier-adresse">
+      <button type="button" class="normalize-button" id="modAdresse" onclick="triggerMod()">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="carnet-adresse-destinataire-adresse">
+      <button type="button" class="normalize-button" id="destAdresse" onclick="contactImportLoad()">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="carnet-adresse-supprimer-adresse">
+      <button type="button" class="normalize-button" id="supAdresse" onclick="remove()">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- l'interface pour composer ou lire un couriel -->
+  <div class="ui-interchangable" id="composer-couriel" style="display: none">
+    <div class="composer-title">
+      <input type="text" placeholder="Titre" name="titrebox" id="title-id" />
+    </div>
+    <div class="composer-destinataire">
+      <input type="text" placeholder="Destinataire" name="destinatairebox" id="destinataire-id" />
+    </div>
+    <div class="composer-content">
+      <textarea type="textarea" name="contentbox" id="content-id"></textarea>
+      <div class="composer-envoyer">
+        <button class="normalize-button" id="buttonenvoi" onclick="send()">
+          <div class="envoyez-button" data-tooltip="Envoyez">
+            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Pop up pour afficher si un courriel a été envoyé ou qu'il y manque qqch-->
+  <div id="wraper-popup-envoi" style="display: none;">
+
+    <div class="popup-envoi">
+      <button onclick="Restore();" id="popUp-envoi-button" class="normalize-button">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+      <div id="envoi-message"></div>
+    </div>
+
+</body>
+
+</html>

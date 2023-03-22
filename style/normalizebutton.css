@@ -1,0 +1,38 @@
+.normalize-button {
+  position: relative;
+  float: right;
+  font-family: Whitney, "Open Sans", Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 11pt;
+  border-radius: 3px;
+  cursor: pointer;
+  height: 45px;
+  width: fit-content;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+  background-color: #7289da;
+  border: 2px solid #7289da;
+  color: #fff;
+}
+
+.normalize-button:hover {
+  transform: translateY(1px);
+  background-color: antiquewhite;
+  border-color: antiquewhite;
+  color: #7289da;
+}
+.normalize-button:active {
+  transform: translateY(2px);
+}
+.normalize-button {
+  outline: transparent !important;
+}
+
+.compose-button:hover::after {
+  content: attr(data-tooltip);
+}
+.contact-button:hover::after {
+  content: attr(data-tooltip);
+}
+.envoyez-button:hover::after {
+  content: attr(data-tooltip);
+}

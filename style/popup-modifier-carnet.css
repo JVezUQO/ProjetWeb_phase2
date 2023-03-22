@@ -1,0 +1,110 @@
+#wraper-popup-modifier-carnet {
+  display: none;
+  height: 100%;
+  width: 100%;
+
+  position: absolute;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  opacity: 1 !important;
+  justify-content: center;
+}
+
+.popup-modifier-carnet {
+  max-height: 30%;
+  max-width: 90vh;
+
+  position: relative;
+  left: 27.5%;
+  top: 30%;
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 2vh;
+
+  background-color: rgb(48, 49, 54);
+
+  border-radius: 10px;
+  border-color: #888;
+  border-style: solid;
+}
+
+#contact-name-field {
+  width: 90%;
+  height: 60%;
+
+  grid-column-start: 1;
+  grid-column-end: 7;
+  grid-row-start: 1;
+  grid-row-end: 2;
+
+  margin: auto;
+  margin-left: 2.5vh;
+  margin-top: 1.5vh;
+
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #888;
+
+  background-color: rgb(48, 49, 54);
+
+  text-align: left;
+  font-size: 2vh;
+  color: antiquewhite;
+
+  resize: none;
+}
+#contact-conffirmer-button {
+  width: 10vh;
+  height: 100%;
+
+  grid-column-start: 7;
+  grid-column-end: 7;
+  grid-row-start: 1;
+  grid-row-end: 2;
+
+  margin: auto;
+  margin-top: 1vh;
+}
+#contact-annulez-button {
+  width: 10vh;
+  height: 100%;
+
+  grid-column-start: 8;
+  grid-column-end: 8;
+  grid-row-start: 1;
+  grid-row-end: 2;
+
+  margin: auto;
+  margin-top: 1vh;
+  margin-right: 1.5vh;
+}
+
+#contact-public-key-field {
+  width: 95%;
+  height: 90%;
+
+  grid-column-start: 1;
+  grid-column-end: 9;
+  grid-row-start: 2;
+  grid-row-end: 5;
+
+  margin: auto;
+  margin-left: 2.5vh;
+  margin-top: -0.25vh;
+
+  resize: none;
+
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #888;
+
+  background-color: rgb(48, 49, 54);
+
+  text-align: left;
+  font-size: 2vh;
+  color: antiquewhite;
+
+  resize: none;
+}

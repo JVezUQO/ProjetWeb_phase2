@@ -1,0 +1,61 @@
+#liste-couriel {
+  color: antiquewhite;
+  font-size: medium;
+  overflow-y: scroll;
+}
+
+.search-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.25rem;
+}
+
+.search-wrapper input {
+  font-size: 1rem;
+  background-color: rgb(48, 49, 54);
+  font-size: 17px;
+  color: antiquewhite;
+  font-family: Whitney, "Open Sans", Helvetica, sans-serif;
+  border-style: solid;
+  border-radius: 4px;
+  border-color: #888;
+  padding: 6px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.user-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.25rem;
+  font-family: Whitney, "Open Sans", Helvetica, sans-serif;
+  margin-top: 1rem;
+}
+
+.card {
+  background-color: #7289da;
+  border-radius: 5px;
+
+  padding: 0.5rem;
+}
+
+.card:hover {
+  background-color: antiquewhite;
+  border-radius: 5px;
+
+  color: #7289da;
+}
+
+.card > .header {
+  margin-bottom: 0.25rem;
+  font-size: 2rem;
+}
+
+.card > .body {
+  font-size: 1rem;
+}
+
+.hide {
+  display: none;
+}
