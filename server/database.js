@@ -2,7 +2,7 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
-const db = new sqlite3.Database('./test.db');
+const db = new sqlite3.Database('./server/test.db');
 
 app.get('/get', (req, res) => {
   db.all('SELECT * FROM EmailUser', (err, rows) => {
