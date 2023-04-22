@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="style/carnetadresse.css" />
   <link rel="stylesheet" href="style/composer.css" />
   <link rel="stylesheet" href="style/popUp-envoi.css">
+  <link rel="stylesheet" href="style/login.css">
 
   <script src="script/popUpEnvoi.js"></script>
   <script src="script/popUpModifierCarnet.js" defer></script>
@@ -19,6 +20,7 @@
   <script src="script/listeEmail.js" defer></script>
   <script src="script/carnetAdresse.js" defer></script>
   <script src="script/envoi.js" defer></script>
+  <script src="script/login.js" defer></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
@@ -29,6 +31,27 @@
 </head>
 
 <body onload="refreshList()">
+  <div id="wraper-login">
+
+    <div class="l-form">
+      <form action="" class="form">
+
+
+        <div class="form__div">
+          <input type="text" class="form__input" id="username" placeholder=" ">
+          <label for="" class="form__label">Username</label>
+        </div>
+
+        <div class="form__div">
+          <input type="password" id="password" class="form__input" placeholder=" ">
+          <label for="" class="form__label">Password</label>
+        </div>
+        <!--fermerLog() temporaire-->
+        <input type="button" class="form__button" value="Sign In" onclick="fermerLog()">
+      </form>
+
+    </div>
+  </div>
   <!-- Pop up pour ajouter des contacts dans le carnet d'adresse-->
   <div id="wraper-popup-modifier-carnet">
     <div class="popup-modifier-carnet">
