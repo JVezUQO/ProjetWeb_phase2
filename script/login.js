@@ -57,14 +57,20 @@ function fermerLog(x) {
 }
 
 function fetchUsers(username, password) {
+  let i = 0;
   fetch("http://localhost:3000/getUsers")
     .then((response) => response.text())
     .then((data) =>
       JSON.parse(data).forEach((name) => {
         if (username === name.Name && password === name.Password) {
           fermerLog(true);
+          return;
+        }
+        if (JSON.parse(data)[JSON.parse(data).length - 1].Name === name.Name) {
+          alert("wrong password");
         }
       })
     )
+
     .catch((error) => console.error(error));
 }
