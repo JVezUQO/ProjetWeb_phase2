@@ -26,16 +26,43 @@ app.get('/create', (req, res) => {
     });
   });
 
+
   app.get('/spawn', (req, res) => {
-    db.run('CREATE TABLE EmailUser(id INTEGER PRIMARY KEY,User,Titre,Destinataire,Message)', (err, rows) => {
+    db.run(`
+      CREATE TABLE EmailUser (
+        id INTEGER PRIMARY KEY,
+        User,
+        Titre,
+        Destinataire,
+        Message
+      );
+      
+      CREATE TABLE EmailUserCredentials (
+        id INTEGER PRIMARY KEY,
+        username,
+        password,
+        publickey,
+        privatekey
+      );
+    `, (err) => {
       if (err) {
         console.error(err);
         res.status(500).send('Server error');
       } else {
-        res.send(rows);
+        res.send('Tables created successfully');
       }
     });
   });
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
