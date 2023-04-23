@@ -16,9 +16,9 @@ app.get('/get', (req, res) => {
 });
 
 app.get('/dummycreate', (req, res) => {
-    db.run('INSERT INTO EmailUser(Titre,Destinataire,Message) VALUES (?,?,?)',['para_a','para_b','para_c'], (err, rows) => {
+    db.run('INSERT INTO Users(Titre,Destinataire,Message) VALUES (?,?,?,?)',['Dummy_User','password','1234567890','qwerty'], (err, rows) => {
       if (err) {
-        console.error(err);
+        console.error(err + 'Impossible de créer un utilisateur vide');
         res.status(500).send('');
       } else {
         res.send(rows);
@@ -29,16 +29,16 @@ app.get('/dummycreate', (req, res) => {
   app.get('/spawn', (req, res) => {
   db.serialize(() => {
     db.serialize(() => {
-      db.run(`CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT, publickey TEXT, privatekey TEXT);`, (err) => {
+      db.run(`CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Password TEXT, Publickey TEXT, Privatekey TEXT);`, (err) => {
         if (err) {
-          console.error(err.message + 'Table User déja crée');
+          console.error(err.message);
         } else {
           console.log('Table User créer avec succès');
         }
       });
-      db.run(`CREATE TABLE IF NOT EXISTS EmailUser (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, destinataire TEXT, contenu TEXT );`, (err) => {
+      db.run(`CREATE TABLE IF NOT EXISTS EmailUser (id INTEGER PRIMARY KEY AUTOINCREMENT, Titre TEXT, Destinataire TEXT, Message TEXT );`, (err) => {
         if (err) {
-          console.error(err.message + 'Table EmailUser déja crée ');
+          console.error(err.message);
         } else {
           console.log('Table email créer avec succès');
         }
