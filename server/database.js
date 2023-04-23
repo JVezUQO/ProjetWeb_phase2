@@ -26,36 +26,24 @@ app.get('/create', (req, res) => {
     });
   });
 
-
-  app.get('/spawn', (req, res) => {
-    db.run(`
-      CREATE TABLE EmailUser (
-        id INTEGER PRIMARY KEY,
-        User,
-        Titre,
-        Destinataire,
-        Message
-      );
-      
-      CREATE TABLE EmailUserCredentials (
-        id INTEGER PRIMARY KEY,
-        username,
-        password,
-        publickey,
-        privatekey
-      );
-    `, (err) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Server error');
-      } else {
-        res.send('Tables created successfully');
-      }
-    });
-  });
-  
-  
-  
+  app.get('/create12', (req, res) => {
+  db.serialize(() => {
+    db.serialize(() => {
+      db.run(`CREATE TABLE IF NOT EXISTS table00 (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);`, (err) => {
+        if (err) {
+          console.error(err.message);
+        } else {
+          console.log('Table 1 created successfully');
+        }
+      });
+      db.run(`CREATE TABLE IF NOT EXISTS table99 (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);`, (err) => {
+        if (err) {
+          console.error(err.message);
+        } else {
+          console.log('Table 2 created successfully');
+        }
+      });
+    })})});
   
   
   
