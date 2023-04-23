@@ -8,7 +8,8 @@ function createKey() {
 function verifierUser() {
   const user = getCredential.username()
   const pass = getCredential.password()
-  /*if db includes username*/
+  
+  
   if (true) {
     /*password === db.username.password*/
     if (true) {

@@ -6,7 +6,18 @@ const db = new sqlite3.Database('./server/test.db');
 
 
 
-app.get('/get', (req, res) => {
+app.get('/getUsers', (req, res) => {
+  db.all('SELECT * FROM Users', (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Server error');
+    } else {
+      res.send(rows);
+    }
+  });
+});
+
+app.get('/getEmail', (req, res) => {
   db.all('SELECT * FROM EmailUser', (err, rows) => {
     if (err) {
       console.error(err);
@@ -52,7 +63,7 @@ app.get('/dummycreate', (req, res) => {
           console.log('Table User créer avec succès');
         }
       });
-      db.run(`CREATE TABLE IF NOT EXISTS EmailUser (id INTEGER PRIMARY KEY AUTOINCREMENT, Titre TEXT, Destinataire TEXT, Message TEXT );`, (err) => {
+      db.run(`CREATE TABLE IF NOT EXISTS EmailUser (id INTEGER PRIMARY KEY AUTOINCREMENT, Titre TEXT, Destinataire TEXT, Message TEXT, Envoyeur TEXT );`, (err) => {
         if (err) {
           console.error(err.message);
         } else {
@@ -63,7 +74,18 @@ app.get('/dummycreate', (req, res) => {
   
   
   
-  
+  function nameCheck(){
+    db.all('SELECT * FROM USERS', (err , rows) => { 
+      if (err) {
+      console.error(err.message);
+    } else {
+      console.log('Vérifications en cours...');
+
+      rows.forEach(row => {
+        if (row.columnName === 1) {
+          console.log('Value found in row:', row);
+    }
+  })}})}
   
   
   
