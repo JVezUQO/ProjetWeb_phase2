@@ -16,7 +16,7 @@ app.get('/get', (req, res) => {
 });
 
 app.get('/dummycreate', (req, res) => {
-    db.run('INSERT INTO Users(Name,Password,Public,PrivateKey) VALUES (?,?,?,?)',['Dummy_User','password','1234567890','qwerty'], (err, rows) => {
+    db.run('INSERT INTO Users(Name,Password,Publickey,PrivateKey) VALUES (?,?,?,?)',['Dummy_User','password','1234567890','qwerty'], (err, rows) => {
       if (err) {
         console.error(err + ' Impossible de créer un utilisateur vide');
         res.status(500).send('');
