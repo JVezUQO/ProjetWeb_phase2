@@ -15,11 +15,11 @@ app.get('/get', (req, res) => {
   });
 });
 
-app.get('/create', (req, res) => {
-    db.run('INSERT INTO EmailUser(User,Titre,Destinataire,Message) VALUES (?,?,?,?)',['para_a','para_b','para_c','para_d'], (err, rows) => {
+app.get('/dummycreate', (req, res) => {
+    db.run('INSERT INTO EmailUser(Titre,Destinataire,Message) VALUES (?,?,?)',['para_a','para_b','para_c'], (err, rows) => {
       if (err) {
         console.error(err);
-        res.status(500).send('Server error');
+        res.status(500).send('');
       } else {
         res.send(rows);
       }
@@ -29,18 +29,18 @@ app.get('/create', (req, res) => {
   app.get('/spawn', (req, res) => {
   db.serialize(() => {
     db.serialize(() => {
-      db.run(`CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT, publickey TEXT, privatekey TEXT);`, (err) => {
+      db.run(`CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT, publickey TEXT, privatekey TEXT);`, (err) => {
         if (err) {
-          console.error(err.message);
+          console.error(err.message + 'Table User déja crée');
         } else {
-          console.log('Table 1 created successfully');
+          console.log('Table User créer avec succès');
         }
       });
-      db.run(`CREATE TABLE IF NOT EXISTS emailuser (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, destinataire TEXT, contenu TEXT );`, (err) => {
+      db.run(`CREATE TABLE IF NOT EXISTS EmailUser (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, destinataire TEXT, contenu TEXT );`, (err) => {
         if (err) {
-          console.error(err.message);
+          console.error(err.message + 'Table EmailUser déja crée ');
         } else {
-          console.log('Table 2 created successfully');
+          console.log('Table email créer avec succès');
         }
       });
     })})});
