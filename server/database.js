@@ -4,13 +4,14 @@ const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const db = new sqlite3.Database('./server/test.db');
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//Sensé permettre au localhost de ce fetch a lui même, énorme problème de sécurité si sa devait être host...
+app.all('*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, PATCH, OPTIONS');
+  res.header('Access-Control-Allow-Headers', '*');
+  res.header('Access-Control-Allow-Credentials', true);
   next();
 });
-
 
 app.get('/getUsers', (req, res) => {
   db.all('SELECT * FROM Users', (err, rows) => {
