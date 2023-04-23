@@ -26,5 +26,4 @@ function decodeRSAOAEP(ciphertext, privateKey) {
   return plaintext.toString("utf8");
 }
 
-
 module.exports = { encodeRSAOAEP, decodeRSAOAEP, generateKeyPairRSA };

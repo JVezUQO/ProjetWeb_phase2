@@ -1,50 +1,10 @@
-const hashing = require("./hashing.js");
-let x = false;
-function createKey() {
-  let pair = hashing.generateKeyPairRSA();
-  let public = pair.publicKey;
-  let private = pair.privateKey;
-  return public, private;
-}
 function verifierUser() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
   fetchUsers(username, password);
 }
-/*
-  if (x == true) {
-    fermerLog();
-  } else {
-    alert("Password error, try again");
-  }
 
-  if (true) {
-    /*password === db.username.password
-    if (true) {
-      fermerLog();
-    } else {
-      //message d'erreur
-      console.log(false);
-    }
-  } else {
-    creer un nouvel utilisateur dans db
-     {
-      username:
-      password:
-      publicKey:
-      privateKey:
-      email: []
-      contact:
-    }
-    
-    console.log("nouvel utilisateur");
-
-    createKey();
-    fermerLog();
-  }
-}
-*/
 function fermerLog(x) {
   if (x == true) {
     const loginPage = document.getElementById("wraper-login");
@@ -57,7 +17,6 @@ function fermerLog(x) {
 }
 
 function fetchUsers(username, password) {
-  let i = 0;
   fetch("http://localhost:3000/getUsers")
     .then((response) => response.text())
     .then((data) =>
@@ -66,11 +25,16 @@ function fetchUsers(username, password) {
           fermerLog(true);
           return;
         }
-        if (JSON.parse(data)[JSON.parse(data).length - 1].Name === name.Name) {
+        if (username === name.Name && password !== name.Password) {
           alert("wrong password");
+        }
+        if (JSON.parse(data)[JSON.parse(data).length - 1].Name === name.Name) {
+          addUser();
         }
       })
     )
 
     .catch((error) => console.error(error));
 }
+
+function addUser() {}
