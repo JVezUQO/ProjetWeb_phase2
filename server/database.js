@@ -51,7 +51,7 @@ app.get('/dummycreate', (req, res) => {
     db.run('INSERT INTO Users(Name,Password,Publickey,Privatekey) VALUES (?,?,?,?)',
     [Name,Password,Publickey,Privatekey], (err, rows) => {
       if (err) {
-        console.error(err + ' Impossible de créer un utilisateur vide');
+        console.error(err + ' Impossible de créer utilisateur');
         res.status(500).send('');
       } else {
         res.send(rows);
