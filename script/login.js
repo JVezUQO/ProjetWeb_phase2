@@ -6,9 +6,12 @@ function createKey() {
   return public, private;
 }
 function verifierUser() {
-  const user = getCredential.username()
-  const pass = getCredential.password()
+ 
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
   
+  fetchUsers();
+
   
   if (true) {
     /*password === db.username.password*/
@@ -43,8 +46,11 @@ function fermerLog() {
   loginPage.style.display = "none";
 }
 
-function getCredential(){
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  return username, password;
+
+
+function fetchUsers() {
+  fetch("http://localhost:3000/getUsers")
+    .then(response => response.text())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
 }

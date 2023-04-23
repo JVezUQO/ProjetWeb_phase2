@@ -4,6 +4,12 @@ const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const db = new sqlite3.Database('./server/test.db');
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 
 app.get('/getUsers', (req, res) => {
@@ -74,7 +80,7 @@ app.get('/dummycreate', (req, res) => {
   
   
   
-  function nameCheck(){
+  function nameCheck(nom){ //prob not good
     db.all('SELECT * FROM USERS', (err , rows) => { 
       if (err) {
       console.error(err.message);
@@ -82,14 +88,20 @@ app.get('/dummycreate', (req, res) => {
       console.log('Vérifications en cours...');
 
       rows.forEach(row => {
-        if (row.columnName === 1) {
-          console.log('Value found in row:', row);
-    }
+        if (row.columnName == nom) {
+          console.log('Usager existant, connection en cours', row);
+          return true;
+         }else{return false;}
+
   })}})}
   
+
+ 
   
   
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
+
+
