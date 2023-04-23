@@ -26,17 +26,17 @@ app.get('/create', (req, res) => {
     });
   });
 
-  app.get('/create12', (req, res) => {
+  app.get('/spawn', (req, res) => {
   db.serialize(() => {
     db.serialize(() => {
-      db.run(`CREATE TABLE IF NOT EXISTS table00 (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);`, (err) => {
+      db.run(`CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT, publickey TEXT, privatekey TEXT);`, (err) => {
         if (err) {
           console.error(err.message);
         } else {
           console.log('Table 1 created successfully');
         }
       });
-      db.run(`CREATE TABLE IF NOT EXISTS table99 (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);`, (err) => {
+      db.run(`CREATE TABLE IF NOT EXISTS emailuser (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, destinataire TEXT, contenu TEXT );`, (err) => {
         if (err) {
           console.error(err.message);
         } else {
