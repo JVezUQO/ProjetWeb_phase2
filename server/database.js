@@ -4,6 +4,11 @@ const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const db = new sqlite3.Database('./server/test.db');
 
+let username;
+let password;
+let Publickey;
+let PrivateKey;
+
 app.get('/get', (req, res) => {
   db.all('SELECT * FROM EmailUser', (err, rows) => {
     if (err) {
@@ -25,6 +30,18 @@ app.get('/dummycreate', (req, res) => {
       }
     });
   });
+
+  app.get('/usercreate', (req, res) => {
+    db.run('INSERT INTO Users(Name,Password,Publickey,PrivateKey) VALUES (?,?,?,?)',[username,password,Publickey,PrivateKey], (err, rows) => {
+      if (err) {
+        console.error(err + ' Impossible de créer un utilisateur vide');
+        res.status(500).send('');
+      } else {
+        res.send(rows);
+      }
+    });
+  });
+
 
   app.get('/spawn', (req, res) => {
   db.serialize(() => {

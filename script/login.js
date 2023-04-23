@@ -6,8 +6,8 @@ function createKey() {
   return public, private;
 }
 function verifierUser() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  const user = getCredential.username()
+  const pass = getCredential.password()
   /*if db includes username*/
   if (true) {
     /*password === db.username.password*/
@@ -28,6 +28,8 @@ function verifierUser() {
       contact:
     }
     */
+
+    
     createKey();
     fermerLog();
   }
@@ -38,4 +40,10 @@ function fermerLog() {
   const formDisplay = document.querySelector("form");
   formDisplay.style.display = "none";
   loginPage.style.display = "none";
+}
+
+function getCredential(){
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  return username, password;
 }
