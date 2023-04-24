@@ -1,11 +1,14 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
+const bodyParser = require('body-parser');
 
 const app = express();
-const db = new sqlite3.Database("./server/test.db");
+app.use(bodyParser.json()); // parse application/json requests
+app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded requests
+const db = new sqlite3.Database("test.db");
 
 //Sensé permettre au localhost de ce fetch a lui même, énorme problème de sécurité si sa devait être host...
-app.all("*", (req, res, next) => {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Methods",
@@ -53,15 +56,16 @@ app.get("/dummycreate", (req, res) => {
   );
 });
 
-app.get("/usercreate", (req, res) => {
-  const { Name, Password, Publickey, Privatekey } = req.query;
+app.post("/user", (req, res) => {
+  const { name, password, publickey, privatekey } = req.body;
+  console.log(req.body);
   db.run(
     "INSERT INTO Users(Name,Password,Publickey,Privatekey) VALUES (?,?,?,?)",
-    [Name, Password, Publickey, Privatekey],
+    [name, password, publickey, privatekey],
     (err, rows) => {
       if (err) {
         console.error(err + " Impossible de créer utilisateur");
-        res.status(500).send("");
+        res.status(500).send();
       } else {
         res.send(rows);
       }
