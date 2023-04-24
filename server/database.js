@@ -86,7 +86,7 @@ app.post("/createemail", (req, res) => {
 app.get("/emails", (req, res) => {
   db.all("SELECT * FROM EmailUser", (err, rows) => {
     //Decode tout les messages de la data base avec la clé privé de l'utilisateur ** seulement ceux qui sont destiné à celui-ci seront affiché
-    let messageDecode = decodeRSAOAEP(ciphertext, User.privateKey);
+    res = decodeRSAOAEP(ciphertext, User.privateKey);
 
     if (err) {
       console.error(err);
