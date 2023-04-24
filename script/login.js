@@ -2,6 +2,28 @@ function verifierUser() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
+  fetch('http://localhost:3000/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: 'John',
+      password: 'mypassword',
+      publickey: 'publickey',
+      privatekey: 'privatekey'
+    })
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    })
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+
   fetchUsers(username, password);
 }
 
@@ -49,15 +71,4 @@ function addUser() {
     .map((key) => key + "=" + data[key])
     .join("&");
   console.log(queryString);
-
-  fetch("http://localhost:3000/usercreate")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      console.log("User created successfully!");
-    })
-    .catch((error) => {
-      console.error("There was a problem creating the user:", error);
-    });
 }
