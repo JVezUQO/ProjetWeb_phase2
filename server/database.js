@@ -1,9 +1,9 @@
 //Importation des constantes et des dépendances nécessaires
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
-const bodyParser = require('body-parser');
-const path = require('path');
-const { generateKeyPairRSA } = require('./hashing');
+const bodyParser = require("body-parser");
+const path = require("path");
+const { generateKeyPairRSA } = require("./hashing");
 
 const app = express();
 app.use(bodyParser.json()); // parse application/json requests
@@ -25,11 +25,11 @@ app.use((req, res, next) => {
 });
 
 // Définit le dossiers script et style comme dossier statique
-app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static(path.join(__dirname, "..")));
 
 // Serve static files from /
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "index.html"));
 });
 
 // Importe la liste de tout les usagers dans la database
@@ -66,10 +66,11 @@ app.post("/createuser", (req, res) => {
 //Va créer un email avec les paramêtres qu'il recoit
 app.post("/createemail", (req, res) => {
   const { titre, destinataire, message, envoyeur } = req.body;
-  console.log(req.body);
+  //Encrypte le message avec la clé public du destinataire
+  let messageEncode = encodeRSAOAEP(message, destinataire.publicKey);
   db.run(
     "INSERT INTO EmailUser(Titre,Destinataire,Message,Envoyeur) VALUES (?,?,?,?)",
-    [titre, destinataire, message, envoyeur],
+    [titre, destinataire, messageEncode, envoyeur],
     (err, rows) => {
       if (err) {
         console.error(err + " Impossible de créer le email");
@@ -84,6 +85,9 @@ app.post("/createemail", (req, res) => {
 // Charge une liste des couriels de tout les usagées
 app.get("/emails", (req, res) => {
   db.all("SELECT * FROM EmailUser", (err, rows) => {
+    //Decode tout les messages de la data base avec la clé privé de l'utilisateur ** seulement ceux qui sont destiné à celui-ci seront affiché
+    let messageDecode = decodeRSAOAEP(ciphertext, User.privateKey);
+
     if (err) {
       console.error(err);
       res.status(500).send("Server error");
@@ -92,8 +96,6 @@ app.get("/emails", (req, res) => {
     }
   });
 });
-
-
 
 // Créer un ''dummy'' pour tester la base de données, à titre de test seulement
 app.get("/dummycreate", (req, res) => {

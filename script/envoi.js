@@ -21,13 +21,28 @@ function send() {
     document.getElementById("title-id").value = "";
     document.getElementById("destinataire-id").value = "";
     document.getElementById("content-id").value = "";
-
-    let email = {};
-    email.titre = titre_txt;
-    email.destinataire = receiver_txt;
-    email.contenu = content_txt;
-    let emailstr = JSON.stringify(email);
-    let value = localStorage.nombre;
+    // fetch qui va permettre d'ajouter un email (contenu, titre, destinataire, envoyeur) dans la base de données
+    fetch("http://localhost:3000/postEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Titre: titre_txt,
+        Destinataire: receiver_txt,
+        Message: content_txt,
+        Envoyeur: "temporaire",
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Error: " + response.status);
+        }
+      })
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
 
     localStorage.setItem(value, emailstr);
     value++;
