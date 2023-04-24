@@ -1,30 +1,12 @@
+// logs in/ signs up the user
 function verifierUser() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  fetch('http://localhost:3000/createuser', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: username,
-      password: password,
-    })
-  })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Error: ' + response.status);
-      }
-    })
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-
   fetchUsers(username, password);
 }
 
+// closes the login page
 function fermerLog(x) {
   if (x == true) {
     const loginPage = document.getElementById("wraper-login");
@@ -36,49 +18,42 @@ function fermerLog(x) {
   }
 }
 
+// logs in/ signs up the user
 function fetchUsers(username, password) {
   fetch("http://localhost:3000/users")
     .then((response) => response.text())
+    .then((data) => JSON.parse(data))
     .then((data) =>
-      JSON.parse(data).forEach((name) => {
-        if (username === name.Name && password === name.Password) {
+      data.forEach((user) => {
+        if (username === user.Name && password === user.Password) {
           fermerLog(true);
           return;
         }
-        if (username === name.Name && password !== name.Password) {
+        if (username === user.Name && password !== user.Password) {
           alert("wrong password");
         }
-        if (JSON.parse(data)[JSON.parse(data).length - 1].Name === name.Name) {
-          addUser();
+        if (data[data.length - 1].Name === user.Name) {
+          fetch('http://localhost:3000/createuser', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: username,
+              password: password,
+            })
+          })
+            .then(response => {
+              if (response.ok) {
+                fermerLog(true);
+              } else {
+                throw new Error('Error: ' + response.status);
+              }
+            })
+            .catch(error => console.error(error));
         }
       })
     )
 
     .catch((error) => console.error(error));
 }
-
-function addUser() {
-  const data = {
-    Name: username,
-    Password: password,
-    Publickey: "mypublickey",
-    Privatekey: "myprivatekey",
-  };
-
-  const queryString = Object.keys(data)
-    .map((key) => key + "=" + data[key])
-    .join("&");
-  console.log(queryString);
-
-  fetch("http://localhost:3000/usercreate")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      console.log("User created successfully!");
-    })
-    .catch((error) => {
-      console.error("There was a problem creating the user:", error);
-    });
-}
-
