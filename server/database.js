@@ -1,6 +1,8 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require('body-parser');
+const path = require('path');
+const { generateKeyPairRSA } = require('./hashing');
 
 const app = express();
 app.use(bodyParser.json()); // parse application/json requests
@@ -19,7 +21,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/getUsers", (req, res) => {
+// Définit le dossiers script et style comme dossier statique
+app.use(express.static(path.join(__dirname, '..')));
+
+// Serve static files from /
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
+
+// get the list of users
+app.get("/users", (req, res) => {
   db.all("SELECT * FROM Users", (err, rows) => {
     if (err) {
       console.error(err);
@@ -30,7 +41,27 @@ app.get("/getUsers", (req, res) => {
   });
 });
 
-app.get("/getEmail", (req, res) => {
+// create a new user
+app.post("/createuser", (req, res) => {
+  const { name, password } = req.body;
+  const { publicKey, privateKey } = generateKeyPairRSA();
+
+  db.run(
+    "INSERT INTO Users(Name,Password,Publickey,Privatekey) VALUES (?,?,?,?)",
+    [name, password, publicKey, privateKey],
+    (err, rows) => {
+      if (err) {
+        console.error(err + " Impossible de créer utilisateur");
+        res.status(500).send();
+      } else {
+        res.send(rows);
+      }
+    }
+  );
+});
+
+// get the list of emails
+app.get("/emails", (req, res) => {
   db.all("SELECT * FROM EmailUser", (err, rows) => {
     if (err) {
       console.error(err);
@@ -41,6 +72,9 @@ app.get("/getEmail", (req, res) => {
   });
 });
 
+
+
+// create a dummy user
 app.get("/dummycreate", (req, res) => {
   db.run(
     "INSERT INTO Users(Name,Password,Publickey,Privatekey) VALUES (?,?,?,?)",
@@ -56,23 +90,7 @@ app.get("/dummycreate", (req, res) => {
   );
 });
 
-app.post("/user", (req, res) => {
-  const { name, password, publickey, privatekey } = req.body;
-  console.log(req.body);
-  db.run(
-    "INSERT INTO Users(Name,Password,Publickey,Privatekey) VALUES (?,?,?,?)",
-    [name, password, publickey, privatekey],
-    (err, rows) => {
-      if (err) {
-        console.error(err + " Impossible de créer utilisateur");
-        res.status(500).send();
-      } else {
-        res.send(rows);
-      }
-    }
-  );
-});
-
+// create the tables
 app.get("/spawn", (req, res) => {
   db.serialize(() => {
     db.serialize(() => {
@@ -100,6 +118,8 @@ app.get("/spawn", (req, res) => {
   });
 });
 
+
+// start the server
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
