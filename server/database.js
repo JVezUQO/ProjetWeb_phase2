@@ -11,31 +11,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-f
 
 //Va automatiquement créer la base de donné avec les tables qui sont nécessaires
 const db = new sqlite3.Database("test.db");
-db.serialize(() => {
-  db.serialize(() => {
-    db.run(
-      `CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Password TEXT, Publickey TEXT, Privatekey TEXT);`,
-      (err) => {
-        if (err) {
-          console.error(err.message);
-        } else {
-          console.log("Table User créer avec succès");
-        }
-      }
-    )
-  })
-})
-db.run(
-  `CREATE TABLE IF NOT EXISTS EmailUser (id INTEGER PRIMARY KEY AUTOINCREMENT, Titre TEXT, Destinataire TEXT, Message TEXT, Envoyeur TEXT );`,
-  (err) => {
-    if (err) {
-      console.error(err.message);
-    } else {
-      console.log("Table email créer avec succès");
-    }
-  }
-);
-
 
 //Sensé permettre au localhost de ce fetch a lui même, énorme problème de sécurité si sa devait être host sur l'internet...
 app.use((req, res, next) => {
@@ -160,6 +135,30 @@ app.get("/dummycreate", (req, res) => {
           }
         }
       );
+    });
+  });
+})();
+
+// delete all the tables
+app.delete("/nuke", (req, res) => {
+  db.serialize(() => {
+    db.run(`DROP TABLE IF EXISTS Users;`, (err) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send("Server error");
+      } else {
+        console.log("Table User supprimer avec succès");
+        res.send("Tables supprimer avec succès");
+      }
+    });
+    db.run(`DROP TABLE IF EXISTS EmailUser;`, (err) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send("Server error");
+      } else {
+        console.log("Table email supprimer avec succès");
+        res.send("Tables supprimer avec succès");
+      }
     });
   });
 });
