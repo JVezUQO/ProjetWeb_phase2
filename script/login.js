@@ -2,16 +2,14 @@ function verifierUser() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  fetch('http://localhost:3000/user', {
+  fetch('http://localhost:3000/createuser', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      name: 'John',
-      password: 'mypassword',
-      publickey: 'publickey',
-      privatekey: 'privatekey'
+      name: username,
+      password: password,
     })
   })
     .then(response => {
@@ -39,7 +37,7 @@ function fermerLog(x) {
 }
 
 function fetchUsers(username, password) {
-  fetch("http://localhost:3000/getUsers")
+  fetch("http://localhost:3000/users")
     .then((response) => response.text())
     .then((data) =>
       JSON.parse(data).forEach((name) => {
