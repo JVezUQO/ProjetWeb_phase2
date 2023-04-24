@@ -37,27 +37,4 @@ function fetchUsers(username, password) {
     .catch((error) => console.error(error));
 }
 
-function addUser() {
-  const data = {
-    Name: "John Doe",
-    Password: "mysecretpassword",
-    Publickey: "mypublickey",
-    Privatekey: "myprivatekey",
-  };
-
-  const queryString = Object.keys(data)
-    .map((key) => key + "=" + data[key])
-    .join("&");
-  console.log(queryString);
-
-  fetch("http://localhost:3000/usercreate")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      console.log("User created successfully!");
-    })
-    .catch((error) => {
-      console.error("There was a problem creating the user:", error);
-    });
-}
+function addUser() {}
