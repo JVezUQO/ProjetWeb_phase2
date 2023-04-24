@@ -2,28 +2,6 @@ function verifierUser() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  fetch('http://localhost:3000/user', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: 'John',
-      password: 'mypassword',
-      publickey: 'publickey',
-      privatekey: 'privatekey'
-    })
-  })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Error: ' + response.status);
-      }
-    })
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-
   fetchUsers(username, password);
 }
 
@@ -51,7 +29,7 @@ function fetchUsers(username, password) {
           alert("wrong password");
         }
         if (JSON.parse(data)[JSON.parse(data).length - 1].Name === name.Name) {
-          addUser();
+          addUser(username,password);
         }
       })
     )
@@ -59,10 +37,10 @@ function fetchUsers(username, password) {
     .catch((error) => console.error(error));
 }
 
-function addUser() {
+function addUser(username,password) {
   const data = {
-    Name: "John Doe",
-    Password: "mysecretpassword",
+    Name: username,
+    Password: password,
     Publickey: "mypublickey",
     Privatekey: "myprivatekey",
   };
@@ -71,4 +49,16 @@ function addUser() {
     .map((key) => key + "=" + data[key])
     .join("&");
   console.log(queryString);
+
+  fetch("http://localhost:3000/usercreate")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      console.log("User created successfully!");
+    })
+    .catch((error) => {
+      console.error("There was a problem creating the user:", error);
+    });
 }
+
