@@ -63,6 +63,24 @@ app.post("/createuser", (req, res) => {
   );
 });
 
+//Va créer un email avec les paramêtres qu'il recoit
+app.post("/createemail", (req, res) => {
+  const { titre, destinataire, message, envoyeur } = req.body;
+  console.log(req.body);
+  db.run(
+    "INSERT INTO EmailUser(Titre,Destinataire,Message,Envoyeur) VALUES (?,?,?,?)",
+    [titre, destinataire, message, envoyeur],
+    (err, rows) => {
+      if (err) {
+        console.error(err + " Impossible de créer le email");
+        res.status(500).send();
+      } else {
+        res.send(rows);
+      }
+    }
+  );
+});
+
 // get the list of emails
 app.get("/emails", (req, res) => {
   db.all("SELECT * FROM EmailUser", (err, rows) => {
