@@ -5,7 +5,31 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json()); // parse application/json requests
 app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded requests
-const db = new sqlite3.Database("test.db");
+const db = new sqlite3.Database("./server/test.db");
+db.serialize(() => {
+  db.serialize(() => {
+    db.run(
+      `CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Password TEXT, Publickey TEXT, Privatekey TEXT);`,
+      (err) => {
+        if (err) {
+          console.error(err.message);
+        } else {
+          console.log("Table User créer avec succès");
+        }
+      }
+    )
+  })})
+  db.run(
+    `CREATE TABLE IF NOT EXISTS EmailUser (id INTEGER PRIMARY KEY AUTOINCREMENT, Titre TEXT, Destinataire TEXT, Message TEXT, Envoyeur TEXT );`,
+    (err) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log("Table email créer avec succès");
+      }
+    }
+  );
+
 
 //Sensé permettre au localhost de ce fetch a lui même, énorme problème de sécurité si sa devait être host...
 app.use((req, res, next) => {
