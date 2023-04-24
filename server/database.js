@@ -1,3 +1,4 @@
+//Importation des constantes et des dépendances nécessaires
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require('body-parser');
@@ -9,7 +10,6 @@ app.use(bodyParser.json()); // parse application/json requests
 app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded requests
 
 //Va automatiquement créer la base de donné avec les tables qui sont nécessaires
-
 const db = new sqlite3.Database("test.db");
 db.serialize(() => {
   db.serialize(() => {
@@ -57,7 +57,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
-// get the list of users
+// Importe la liste de tout les usagers dans la database
 app.get("/users", (req, res) => {
   db.all("SELECT * FROM Users", (err, rows) => {
     if (err) {
@@ -69,7 +69,7 @@ app.get("/users", (req, res) => {
   });
 });
 
-// create a new user
+// Créer un nouveau usager
 app.post("/createuser", (req, res) => {
   const { name, password } = req.body;
   const { publicKey, privateKey } = generateKeyPairRSA();
@@ -106,7 +106,7 @@ app.post("/createemail", (req, res) => {
   );
 });
 
-// get the list of emails
+// Charge une liste des couriels de tout les usagées
 app.get("/emails", (req, res) => {
   db.all("SELECT * FROM EmailUser", (err, rows) => {
     if (err) {
@@ -120,7 +120,7 @@ app.get("/emails", (req, res) => {
 
 
 
-// create a dummy user
+// Créer un ''dummy'' pour tester la base de données, à titre de test seulement
 app.get("/dummycreate", (req, res) => {
   db.run(
     "INSERT INTO Users(Name,Password,Publickey,Privatekey) VALUES (?,?,?,?)",
@@ -136,8 +136,8 @@ app.get("/dummycreate", (req, res) => {
   );
 });
 
-// create the tables
-app.get("/spawn", (req, res) => {
+//Fonction qui créait initialment les tables de facon manuel. Cela est automatisé au lancement du programme
+/*app.get("/spawn", (req, res) => {
   db.serialize(() => {
     db.serialize(() => {
       db.run(
@@ -163,9 +163,9 @@ app.get("/spawn", (req, res) => {
     });
   });
 });
+*/
 
-
-// start the server
+// Démarre le serveur sur le port 3000
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
